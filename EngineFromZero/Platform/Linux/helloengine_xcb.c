@@ -9,27 +9,27 @@ int main(void)
 	xcb_screen_t  *pScreen;
 	xcb_window_t window;
 	xcb_gcontext_t foreground;
-	xcb_gcontect_t background;
+	xcb_gcontext_t background;
 	xcb_generic_event_t *pEvent;
 
 	uint32_t mask = 0;
 	uint32_t values[2];
 	uint8_t isQuit = 0;
 
-	char titile[] = "Hello Engine!";
+	char title[] = "Hello Engine!";
 	char title_icon[] = "Hello Engine!(iconified)";
 
-	pcon = xcb_connect(0,0);
-	pScreen = xcb_setup_roots_iterator(xcb_get_setup(pCon)).data;
+	pConn = xcb_connect(0,0);
+	pScreen = xcb_setup_roots_iterator(xcb_get_setup(pConn)).data;
 	window = pScreen->root;
-	foreground = xcb_generate_id(pCon);
+	foreground = xcb_generate_id(pConn);
 	mask = XCB_GC_FOREGROUND | XCB_GC_GRAPHICS_EXPOSURES;
 	values[0] = pScreen->black_pixel;
 	values[1] = 0;
 	xcb_create_gc(pConn, background, window, mask, values);
 
 	window = xcb_generate_id(pConn);
-	mask = XCB_CW_BACK_PICXEL | XCB_CW_EVENT_MASK; 
+	mask = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK; 
 	values[0] = pScreen->white_pixel;
 	values[1] =XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_KEY_PRESS;
 	xcb_create_window(pConn, 
@@ -41,7 +41,7 @@ int main(void)
 			XCB_WINDOW_CLASS_INPUT_OUTPUT,
 			pScreen->root_visual,
 			mask, values);
-	xcb_change_property(pconn, XCB_PROP_MODE_REPLACE,window,
+	xcb_change_property(pConn, XCB_PROP_MODE_REPLACE,window,
 			XCB_ATOM_WM_NAME,XCB_ATOM_STRING,8,strlen(title), title);
 
 	xcb_change_property(pConn, XCB_PROP_MODE_REPLACE,window,
@@ -62,7 +62,7 @@ int main(void)
 				isQuit = 1;
 				break;
 			}
-			free(Event);
+			free(pEvent);
 		}
 	}
 	return 0;
