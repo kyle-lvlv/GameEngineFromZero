@@ -59,7 +59,7 @@ int main(void)
 			case XCB_EXPOSE:
 				{
 					xcb_rectangle_t rect = {20,20,60,80};
-					xcb_poly_fill_rectangle(pConn,window,forground,1,&rect);
+					xcb_poly_fill_rectangle(pConn,window,foreground,1,&rect);
 					xcb_flush(pConn);
 				}
 				break;
