@@ -56,6 +56,18 @@ LRESULT CALLBACK WindowProc(HWND hWnd,
 {
 	switch(message)
 	{
+	case WM_PAINT:
+		{
+			PAINTSTRUCT ps;
+			HDC hdc = BeginPaint(hWnd, &ps);
+
+			RECT rect = {20,20,60,80};
+			HBRUSH brush = (HBRUSH)GetStockObject(BLACK_BRUSH);
+			FillRect(hdc, &rect, brush);
+
+			EndPaint(hWnd,&ps);
+		}
+		break;
 	case WM_DESTROY:
 		{
 			PostQuitMessage(0);
